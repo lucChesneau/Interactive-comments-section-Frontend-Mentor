@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "sass": "^1.50.0"
+  }, 
+  "name": "sass",
+  "version": "1.0.0",
+  "description": "Run sass",
+  "main": "index.js",
+  "scripts": {
+    "sass": "node-sass -watch scss -o css"
+  },
+  "author": "",
+  "license": "ISC"
+}
+

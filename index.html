@@ -1,26 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
 
-  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
-  <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/style.css">
-  <title>Frontend Mentor | Interactive comments section</title>
+        <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+        <link rel="stylesheet" href="css/style.css">
+        <title>Frontend Mentor | Interactive comments section</title>
 
-  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
-  <style>
-   
-  </style>
+        <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+        <style>
+
+        </style>
 </head>
 <body>
 
   <!-- Pull dynamic content from the data.json file -->
+        <div class="container">
+                <main class="comment-section">
+                        <article class="total-comment">
+                                <div class="comment primary-comment">
+                                        <div class="note-container">
+                                        <button><img src="./images/icon-plus.svg" alt="up vote this comment"></button>
+                                        <strong class="note"></strong>
+                                        <button><img src="./images/icon-minus.svg" alt="down vote this comment"></button>
+                                        </div>
+                                        <div class="comment-container">
+                                                <div class="comment-header">
+                                                        <div class="comment-info">
+                                                                <img src="images/avatars/image-amyrobson.webp" alt="user">
+                                                                <h3 class="comment-title"></h3>
+                                                                <span class="comment-date"></span>
+                                                        </div>
+                                                        <div class="comment-interaction">
+                                                                <button>
+                                                                        <img src="images/icon-reply.svg" alt="like">
+                                                                        <span>Reply</span>
+                                                                </button>
+                                                        </div>
+                                                </div>
+                                                <div class="comment-content">
+                                                        <p class="comment-text"></p>
+                                                </div>  
+                                        </div>
+                                </div>
+                                <div class="comment secondary-comment">
+                                        <div class="note-container">
+                                                <button><img src="./images/icon-plus.svg" alt="up vote this comment"></button>
+                                                <strong class="note"></strong>
+                                                <button><img src="./images/icon-minus.svg" alt="down vote this comment"></button>
+                                        </div>
+                                        <div class="comment-container">
+                                                <div class="comment-header">
+                                                        <div class="comment-info">
+                                                                <img src="images/avatars/image-amyrobson.webp" alt="user">
+                                                                <h3 class="comment-title"></h3>
+                                                                <span class="comment-date"></span>
+                                                        </div>
+                                                        <div class="comment-interaction">
+                                                                <button>
+                                                                        <img src="images/icon-reply.svg" alt="like">
+                                                                        <span>Reply</span>
+                                                                </button>
+                                                        </div>
+                                                </div>
+                                                <div class="comment-content">
+                                                        <p class="comment-text"></p>
+                                                </div>  
+                                        </div>
+                                </div>
+                        </article>
+                </main>
+        </div>
   
-  <div class="attribution">
+  <!-- <div class="attribution">
     Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
     Coded by <a href="#">Your Name Here</a>.
-  </div>
+  </div> -->
+  
+  <script src='js/script.js'> </script>
 </body>
 </html>

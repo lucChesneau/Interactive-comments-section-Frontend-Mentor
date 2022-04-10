@@ -1,16 +1,15 @@
 const sectionComment = document.querySelector(".comment-section");
 function displayAComment(prim, username, createdAt, content){
 
-        const comment = document.createElement("article");
-        comment.classList.add("total-comment");
 
         const primaryComment = document.createElement("div");
 
-        if(prim === "true"){
+        if(prim === true){
                 primaryComment.className = "comment primary-comment";
-        } else{
+        }else{
                 primaryComment.className = "comment secondary-comment";
         }
+        
         
 
         commentContainer = document.createElement("div");
@@ -57,8 +56,8 @@ function displayAComment(prim, username, createdAt, content){
         primaryComment.appendChild(createInteractionNote());
         primaryComment.appendChild(commentContainer);
 
-        comment.appendChild(primaryComment);
-        sectionComment.appendChild(comment);
+        return primaryComment;
+
         
 }
 
@@ -71,28 +70,41 @@ function callDataJson(method){
         .then(function(data) {
 
                 for(let i = 0; i < data.comments.length; i++){
+
+                        let dataReplies = data.comments[i].replies;
                         let dataUsername = data.comments[i].user.username;
                         let dataCreatedAt = data.comments[i].createdAt;
                         let dataContent = data.comments[i].content;
 
 
-                        console.log(data.comments[i]);  
-                        console.log(data.comments.replies);
-                        displayAComment(true, dataUsername, dataCreatedAt, dataContent);
-                        
-                        if(data.comments[i].replies !== undefined){
-                                for(let v = 0; i < data.comments[i].replies.length; v++){
+                        console.log(dataReplies);  
+                        // console.log(data.comments.replies[i]);
 
+                        
+
+                        const comment = document.createElement("article");
+                        comment.classList.add("total-comment");
+
+                        comment.appendChild( displayAComment(true, dataUsername, dataCreatedAt, dataContent));
+                        
+
+                       
+                        
+                        if(dataReplies.length > 0){
+                                
+                                for(let v = 0; v < dataReplies.length; v++){
                                
-                                        let replyUsername = data.comments[i].replies[v].user.username;
-                                        let replyCreatedAt = data.comments[i].replies[v].createdAt;
-                                        let replyContent = data.comments[i].replies[v].content;
+                                        let replyUsername = dataReplies[v].user.username;
+                                        let replyCreatedAt = dataReplies[v].createdAt;
+                                        let replyContent = dataReplies[v].content;
                                         
                                         
-                                        displayAComment(false, replyUsername, replyCreatedAt, replyContent);
+                                        comment.appendChild(displayAComment(false, replyUsername, replyCreatedAt, replyContent));
                                 }
 
                         }
+
+                        sectionComment.appendChild(comment);
 
                 }     
         });
@@ -164,7 +176,6 @@ function createInteractionCRUD(mine){
 
         return commentInteraction;
 }
-
 
 
 callDataJson();

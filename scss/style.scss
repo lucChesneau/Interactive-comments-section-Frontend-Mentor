@@ -7,6 +7,13 @@
 
 body {
         background-color: #F5F6F9;
+        
+}
+
+main {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
 }
 
 .container {
@@ -18,13 +25,59 @@ body {
         background-color: #FFFFFF;
         padding: 10px 12px;
         display: flex;
+}
 
-        .note-container {
-                background-color: #F5F6FA;
+.secondary-comment {
+        width: 90%;
+}
+
+
+.note-container {
+        background-color: #F5F6FA;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 5px 10px;
+        gap: 5px;
+        border-radius: 10px;
+        justify-content: space-around;
+
+        button{
+                background-color: rgba(0,0,0,0);
+                border: none;
+        }
+
+        strong{
+                color: #5457b6;
+        }
+}
+
+.comment-header {
+        display: flex;
+        justify-content: space-between;
+}
+
+.comment-infos {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+}
+
+.total-comment {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 10px;
+}
+
+.comment-interaction {
+        button {
                 display: flex;
-                flex-direction: column;
                 align-items: center;
-                padding: 5px 10px;
+                background-color: rgba(0,0,0,0);
+                border: none;
                 gap: 5px;
+                color: #5457b6;
+                font-weight: bold;
         }
 }

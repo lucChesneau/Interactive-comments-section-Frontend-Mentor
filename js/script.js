@@ -1,5 +1,5 @@
 const sectionComment = document.querySelector(".comment-section");
-function displayAComment(prim, username, createdAt, content){
+function displayAComment(prim, username, createdAt, content, note, imageLink){
 
 
         const primaryComment = document.createElement("div");
@@ -7,6 +7,7 @@ function displayAComment(prim, username, createdAt, content){
         if(prim === true){
                 primaryComment.className = "comment primary-comment";
         }else{
+
                 primaryComment.className = "comment secondary-comment";
         }
         
@@ -24,7 +25,7 @@ function displayAComment(prim, username, createdAt, content){
         commentInfos.className = "comment-infos";
 
         const imageAvatar = document.createElement("img");
-        imageAvatar.setAttribute("src", "images/avatars/image-amyrobson.webp");
+        imageAvatar.setAttribute("src", imageLink);
         imageAvatar.setAttribute("alt", "user");
         const h3 = document.createElement("h3");
         h3.classList.add("comment-title");
@@ -38,6 +39,7 @@ function displayAComment(prim, username, createdAt, content){
 
         commentInteraction = document.createElement("div");
         commentInteraction.classList.add("comment-interaction");
+
 
         h3.textContent = username;
         commentDate.textContent = createdAt;
@@ -53,7 +55,7 @@ function displayAComment(prim, username, createdAt, content){
 
         
 
-        primaryComment.appendChild(createInteractionNote());
+        primaryComment.appendChild(createInteractionNote(note));
         primaryComment.appendChild(commentContainer);
 
         return primaryComment;
@@ -68,38 +70,46 @@ function callDataJson(method){
             return response.json();
         })
         .then(function(data) {
-
+                console.log(data)
                 for(let i = 0; i < data.comments.length; i++){
 
                         let dataReplies = data.comments[i].replies;
                         let dataUsername = data.comments[i].user.username;
                         let dataCreatedAt = data.comments[i].createdAt;
                         let dataContent = data.comments[i].content;
+                        let dataNote = data.comments[i].score;
+                        let dataImageLink = data.comments[i].user.image.webp;
 
 
                         console.log(dataReplies);  
                         // console.log(data.comments.replies[i]);
 
                         
-
+                        
                         const comment = document.createElement("article");
                         comment.classList.add("total-comment");
 
-                        comment.appendChild( displayAComment(true, dataUsername, dataCreatedAt, dataContent));
+                        comment.appendChild( displayAComment(true, dataUsername, dataCreatedAt, dataContent, dataNote, dataImageLink));
                         
 
                        
                         
                         if(dataReplies.length > 0){
-                                
+
+                                const repliesContainer = document.createElement("div");
+                                repliesContainer.classList.add("replies-container");
+                                comment.appendChild(repliesContainer);
+
                                 for(let v = 0; v < dataReplies.length; v++){
                                
                                         let replyUsername = dataReplies[v].user.username;
                                         let replyCreatedAt = dataReplies[v].createdAt;
                                         let replyContent = dataReplies[v].content;
+                                        let replyNote = dataReplies[v].score;
+                                        let replyImageLink = dataReplies[v].user.image.webp;
                                         
                                         
-                                        comment.appendChild(displayAComment(false, replyUsername, replyCreatedAt, replyContent));
+                                        repliesContainer.appendChild(displayAComment(false, replyUsername, replyCreatedAt, replyContent, replyNote, replyImageLink));
                                 }
 
                         }
@@ -110,7 +120,7 @@ function callDataJson(method){
         });
 }
 
-function createInteractionNote(){
+function createInteractionNote(note){
         const noteContainer = document.createElement("div");
         noteContainer.classList.add("note-container");
 
@@ -121,6 +131,7 @@ function createInteractionNote(){
 
         const strong = document.createElement("strong");
         strong.classList.add("note");
+        strong.textContent = note;
 
         const iconMoins = document.createElement("button");
         const iconMoinsImg = document.createElement("img");

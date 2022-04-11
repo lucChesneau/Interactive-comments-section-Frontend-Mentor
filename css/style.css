@@ -74,6 +74,38 @@ select {
     scroll-behavior: auto !important;
   }
 }
+/* rubik-regular - latin */
+@font-face {
+  font-family: "Rubik";
+  font-style: normal;
+  font-weight: 400;
+  src: local(""), url("../fonts/rubik-v19-latin-regular.woff2") format("woff2"), url("../fonts/rubik-v19-latin-regular.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* rubik-500 - latin */
+@font-face {
+  font-family: "Rubik";
+  font-style: normal;
+  font-weight: 500;
+  src: local(""), url("../fonts/rubik-v19-latin-500.woff2") format("woff2"), url("../fonts/rubik-v19-latin-500.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* rubik-600 - latin */
+@font-face {
+  font-family: "Rubik";
+  font-style: normal;
+  font-weight: 600;
+  src: local(""), url("../fonts/rubik-v19-latin-600.woff2") format("woff2"), url("../fonts/rubik-v19-latin-600.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* rubik-700 - latin */
+@font-face {
+  font-family: "Rubik";
+  font-style: normal;
+  font-weight: 700;
+  src: local(""), url("../fonts/rubik-v19-latin-700.woff2") format("woff2"), url("../fonts/rubik-v19-latin-700.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
 .attribution {
   font-size: 11px;
   text-align: center;
@@ -83,14 +115,24 @@ select {
   color: #3e52a3;
 }
 
+:root {
+  --gap-comment: 20px;
+}
+
 body {
   background-color: #F5F6F9;
+  font-family: "Rubik", sans-serif;
+}
+body button {
+  cursor: pointer;
 }
 
 main {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--gap-comment);
+  margin-top: 5rem;
+  margin-bottom: 5rem;
 }
 
 .container {
@@ -100,12 +142,10 @@ main {
 
 .comment {
   background-color: #FFFFFF;
-  padding: 10px 12px;
+  padding: 20px 25px;
   display: flex;
-}
-
-.secondary-comment {
-  width: 90%;
+  gap: 20px;
+  border-radius: 10px;
 }
 
 .note-container {
@@ -131,17 +171,39 @@ main {
   justify-content: space-between;
 }
 
+.comment-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.comment-text {
+  word-wrap: break-word;
+  color: #67727e;
+}
+
 .comment-infos {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 1rem;
+}
+.comment-infos img {
+  height: 2.2rem;
+}
+.comment-infos .comment-title {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #324152;
+}
+.comment-infos .comment-date {
+  color: #67727e;
 }
 
 .total-comment {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 10px;
+  gap: var(--gap-comment);
 }
 
 .comment-interaction button {
@@ -149,9 +211,52 @@ main {
   align-items: center;
   background-color: rgba(0, 0, 0, 0);
   border: none;
-  gap: 5px;
+  gap: 3px;
   color: #5457b6;
   font-weight: bold;
+}
+.comment-interaction button img {
+  max-height: 15px;
+  object-fit: contain;
+}
+
+.replies-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-comment);
+  align-items: end;
+  border-left: 2px solid #eaecf1;
+  margin-left: 4%;
+}
+.replies-container .secondary-comment {
+  margin-left: 4%;
+}
+
+img[src*=icon] {
+  width: 30px;
+}
+
+.post-comment-container {
+  background-color: #FFFFFF;
+  padding: 20px 25px;
+  border-radius: 10px;
+}
+.post-comment-container .post-comment-form {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+.post-comment-container .post-comment-form textarea {
+  width: 100%;
+}
+.post-comment-container .post-comment-form button[type=submit] {
+  background-color: #5457b6;
+  color: #FFFFFF;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=style.css.map */

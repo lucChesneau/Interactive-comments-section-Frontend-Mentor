@@ -132,12 +132,14 @@ main {
   flex-direction: column;
   gap: var(--gap-comment);
   margin-top: 5rem;
-  margin-bottom: 5rem;
+  margin-bottom: 2rem;
 }
 
 .container {
   max-width: 960px;
   margin: 0 auto;
+  padding-right: 1rem;
+  padding-left: 1rem;
 }
 
 .comment {
@@ -161,6 +163,7 @@ main {
 .note-container button {
   background-color: rgba(0, 0, 0, 0);
   border: none;
+  width: 25px;
 }
 .note-container strong {
   color: #5457b6;
@@ -199,6 +202,15 @@ main {
   color: #67727e;
 }
 
+.comment-interaction {
+  display: flex;
+  flex-direction: row-reverse;
+}
+.comment-interaction .delete {
+  gap: 0;
+  color: #ED6368;
+}
+
 .total-comment {
   display: flex;
   flex-direction: column;
@@ -207,6 +219,7 @@ main {
 }
 
 .comment-interaction button {
+  transition: 0.3s;
   display: flex;
   align-items: center;
   background-color: rgba(0, 0, 0, 0);
@@ -214,6 +227,9 @@ main {
   gap: 3px;
   color: #5457b6;
   font-weight: bold;
+}
+.comment-interaction button:hover {
+  opacity: 0.5;
 }
 .comment-interaction button img {
   max-height: 15px;
@@ -236,10 +252,20 @@ img[src*=icon] {
   width: 30px;
 }
 
+img[src*=icon-minus], img[src*=icon-plus] {
+  opacity: 0.4;
+  transition: 0.3s;
+}
+
+img[src*=icon-minus]:hover, img[src*=icon-plus]:hover {
+  opacity: 1;
+}
+
 .post-comment-container {
   background-color: #FFFFFF;
   padding: 20px 25px;
   border-radius: 10px;
+  margin-bottom: 20px;
 }
 .post-comment-container .post-comment-form {
   display: flex;
@@ -248,7 +274,12 @@ img[src*=icon] {
   gap: 20px;
 }
 .post-comment-container .post-comment-form textarea {
+  resize: none;
+  height: 100px;
   width: 100%;
+  border-radius: 10px;
+  padding: 10px 20px;
+  border: 2px solid #eaecf1;
 }
 .post-comment-container .post-comment-form button[type=submit] {
   background-color: #5457b6;
@@ -257,6 +288,40 @@ img[src*=icon] {
   padding: 10px 20px;
   border-radius: 10px;
   cursor: pointer;
+}
+
+.your-comment {
+  color: #FFF;
+  background-color: #5457b6;
+  padding: 2px 7px;
+  border-radius: 3px;
+}
+
+.screen-mobile {
+  display: none;
+}
+
+@media screen and (max-width: 700px) {
+  .comment > .note-container {
+    display: none;
+  }
+
+  .comment-header > .comment-interaction {
+    display: none;
+  }
+
+  .comment {
+    flex-direction: column;
+  }
+
+  .screen-mobile {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .note-container {
+    flex-direction: row;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */

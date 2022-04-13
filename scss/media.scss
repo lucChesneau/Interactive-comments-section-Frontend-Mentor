@@ -1,0 +1,27 @@
+.screen-mobile {
+        display: none;
+}
+
+@media screen and (max-width: 700px) {
+
+        .comment > .note-container {
+                display: none;
+        }
+
+        .comment-header > .comment-interaction {
+                display: none;
+        }
+
+        .comment {
+                flex-direction: column;
+        }
+
+        .screen-mobile {
+                display: flex;
+                justify-content: space-between;
+        }
+
+        .note-container {
+                flex-direction: row;
+        }
+      }

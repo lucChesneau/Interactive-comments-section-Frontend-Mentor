@@ -1,5 +1,5 @@
 const sectionComment = document.querySelector(".comment-section");
-function displayAComment(prim, username, createdAt, content, note, imageLink){
+function displayAComment(prim, username, createdAt, content, note, imageLink, mine){
 
 
         const primaryComment = document.createElement("div");
@@ -29,6 +29,7 @@ function displayAComment(prim, username, createdAt, content, note, imageLink){
         imageAvatar.setAttribute("alt", "user");
         const h3 = document.createElement("h3");
         h3.classList.add("comment-title");
+
         const commentDate = document.createElement("span");
         commentDate.classList.add("comment-date");
 
@@ -44,9 +45,18 @@ function displayAComment(prim, username, createdAt, content, note, imageLink){
         h3.textContent = username;
         commentDate.textContent = createdAt;
         commentText.textContent = content;
-
-        commentInfos.append(imageAvatar, h3, commentDate);
-        commentInteraction.appendChild(createInteractionCRUD(false));
+        if(mine){
+                commentInteraction.appendChild(createInteractionCRUD(true));
+                const yourComment = document.createElement("span");
+                yourComment.classList.add("your-comment");
+                yourComment.textContent = "you";
+                commentInfos.append(imageAvatar, h3, yourComment, commentDate);
+        } else {
+                commentInteraction.appendChild(createInteractionCRUD(false));
+                commentInfos.append(imageAvatar, h3, commentDate);
+        }
+        
+        
         commentHeader.append(commentInfos, commentInteraction);
 
         commentContent.appendChild(commentText);
@@ -58,13 +68,28 @@ function displayAComment(prim, username, createdAt, content, note, imageLink){
         primaryComment.appendChild(createInteractionNote(note));
         primaryComment.appendChild(commentContainer);
 
+        const screenMobileDiv = document.createElement("div");
+        screenMobileDiv.classList.add("screen-mobile");
+
+        if(mine){
+                primaryComment.appendChild(screenMobileDiv);
+                screenMobileDiv.appendChild(createInteractionNote(note));
+                screenMobileDiv.appendChild(createInteractionCRUD(true));
+                
+        } else {
+                primaryComment.appendChild(screenMobileDiv);
+                screenMobileDiv.appendChild(createInteractionNote(note));
+                screenMobileDiv.appendChild(createInteractionCRUD(false));
+                
+        }
+
         return primaryComment;
 
         
 }
 
 
-function callDataJson(method){ 
+function callDataJson(){ 
         fetch("./data.json")
         .then(function(response) {
             return response.json();
@@ -81,7 +106,7 @@ function callDataJson(method){
                         let dataImageLink = data.comments[i].user.image.webp;
 
 
-                        console.log(dataReplies);  
+                        console.log(data);  
                         // console.log(data.comments.replies[i]);
 
                         
@@ -89,7 +114,12 @@ function callDataJson(method){
                         const comment = document.createElement("article");
                         comment.classList.add("total-comment");
 
-                        comment.appendChild( displayAComment(true, dataUsername, dataCreatedAt, dataContent, dataNote, dataImageLink));
+                        if (data.currentUser.username === dataUsername){
+                                comment.appendChild( displayAComment(true, dataUsername, dataCreatedAt, dataContent, dataNote, dataImageLink, true));
+                        } else {
+                                comment.appendChild( displayAComment(true, dataUsername, dataCreatedAt, dataContent, dataNote, dataImageLink, false));
+                        }
+                        
                         
 
                        
@@ -108,8 +138,11 @@ function callDataJson(method){
                                         let replyNote = dataReplies[v].score;
                                         let replyImageLink = dataReplies[v].user.image.webp;
                                         
-                                        
-                                        repliesContainer.appendChild(displayAComment(false, replyUsername, replyCreatedAt, replyContent, replyNote, replyImageLink));
+                                        if (data.currentUser.username === replyUsername){
+                                                repliesContainer.appendChild(displayAComment(false, replyUsername, replyCreatedAt, replyContent, replyNote, replyImageLink, true));
+                                        } else {
+                                                repliesContainer.appendChild(displayAComment(false, replyUsername, replyCreatedAt, replyContent, replyNote, replyImageLink, false));
+                                        }
                                 }
 
                         }
@@ -183,6 +216,8 @@ function createInteractionCRUD(mine){
                 buttonDelete.appendChild(spanDelete);
 
                 commentInteraction.appendChild(buttonDelete);
+                imageReply.setAttribute("src", "./images/icon-edit.svg");
+                spanReply.textContent = "Edit";
         }
 
         return commentInteraction;
@@ -190,3 +225,10 @@ function createInteractionCRUD(mine){
 
 
 callDataJson();
+
+
+const sendCommentButton = document.querySelector(".btn-post-comment");
+
+sendCommentButton.addEventListener("click", function(event){
+        event.preventDefault();
+});

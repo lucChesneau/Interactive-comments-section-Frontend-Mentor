@@ -1,4 +1,6 @@
 const sectionComment = document.querySelector(".comment-section");
+let currentUser;
+let currentAvatar;
 function displayAComment(prim, username, createdAt, content, note, imageLink, mine){
 
 
@@ -109,7 +111,8 @@ function callDataJson(){
                         console.log(data);  
                         // console.log(data.comments.replies[i]);
 
-                        
+                        currentUser = data.currentUser.username;
+                        currentAvatar = data.currentUser.image.webp;
                         
                         const comment = document.createElement("article");
                         comment.classList.add("total-comment");
@@ -201,6 +204,28 @@ function createInteractionCRUD(mine){
 
         commentInteraction.appendChild(buttonReply);
 
+
+        buttonReply.addEventListener("click", function(){
+                
+                const targetToDisplay = this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+
+                if(targetToDisplay.classList.contains("total-comment")){
+                        const repliesContainer = document.createElement("div");
+                        repliesContainer.classList.add("replies-container");
+                        repliesContainer.classList.add("replies-container-display");
+
+                        repliesContainer.appendChild(displayInputToReply("Jean-premier-Com"));
+
+
+                        targetToDisplay.insertBefore(repliesContainer, targetToDisplay.childNodes[1]);
+
+                } else {
+                        targetToDisplay.insertBefore(displayInputToReply("Jean-rep-encore"), targetToDisplay.childNodes[1]);
+                }
+
+                console.log(targetToDisplay);
+        });
+
         if(mine){
                 const buttonDelete = document.createElement("button");
                 buttonDelete.classList.add("delete");
@@ -218,6 +243,16 @@ function createInteractionCRUD(mine){
                 commentInteraction.appendChild(buttonDelete);
                 imageReply.setAttribute("src", "./images/icon-edit.svg");
                 spanReply.textContent = "Edit";
+
+
+                buttonDelete.addEventListener("click", function(){
+
+                        const targetToRemove = commentInteraction.parentNode.parentNode.parentNode.parentNode;
+
+                        targetToRemove.classList.contains("secondary-comment") ? targetToRemove.parentNode.removeChild(targetToRemove) : targetToRemove.parentNode.parentNode.removeChild(targetToRemove.parentNode);
+                });
+
+
         }
 
         return commentInteraction;
@@ -227,8 +262,47 @@ function createInteractionCRUD(mine){
 callDataJson();
 
 
-const sendCommentButton = document.querySelector(".btn-post-comment");
+const sendCommentButton = document.querySelector("#post-message");
 
 sendCommentButton.addEventListener("click", function(event){
         event.preventDefault();
+        const commentToSend = document.querySelector("#comment");
+
+        const commentArticle = document.createElement("article");
+        commentArticle.classList.add("total-comment");
+
+        commentArticle.appendChild(displayAComment(true, currentUser, "seconds ago", commentToSend.value, 0, currentAvatar, true));
+        sectionComment.appendChild(commentArticle);
 });
+
+
+function displayInputToReply(userToReply) {
+        const postCommentContainer = document.createElement("div");
+        postCommentContainer.classList.add("post-comment-container");
+        postCommentContainer.classList.add("secondary-comment");
+
+        const form = document.createElement("form");
+        form.classList.add("post-comment-form");
+
+        const img = document.createElement("img");
+        img.setAttribute("src", currentAvatar);
+        img.setAttribute("alt", "My avatar");
+
+        const textArea = document.createElement("textarea");
+        textArea.setAttribute("placeholder", "Add a comment");
+        textArea.setAttribute("name", "comment");
+        textArea.value = userToReply;
+
+        const button = document.createElement("button");
+        button.classList.add("btn-post-comment");
+        button.textContent = "Reply";
+        button.setAttribute("type", "submit");
+
+        form.appendChild(img);
+        form.appendChild(textArea);
+        form.appendChild(button);
+
+        postCommentContainer.appendChild(form);
+
+        return postCommentContainer;
+}

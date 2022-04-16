@@ -287,6 +287,9 @@ img[src*=icon-minus]:hover, img[src*=icon-plus]:hover {
   padding: 10px 20px;
   border: 2px solid #eaecf1;
 }
+.post-comment-container .post-comment-form textarea span {
+  color: #5457b6;
+}
 .post-comment-container .post-comment-form button[type=submit] {
   background-color: #5457b6;
   color: #FFFFFF;

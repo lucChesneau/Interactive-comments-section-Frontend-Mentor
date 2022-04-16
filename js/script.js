@@ -186,6 +186,8 @@ function createInteractionNote(note){
 }
 
 function createInteractionCRUD(mine){
+        const mobileSize = window.matchMedia("(max-width: 700px)");
+
         const commentInteraction = document.createElement("div");
         commentInteraction.classList.add("comment-interaction");
 
@@ -206,25 +208,41 @@ function createInteractionCRUD(mine){
 
 
         buttonReply.addEventListener("click", function(){
+
+               let targetToDisplay;
                 
-                const targetToDisplay = this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+                mobileSize.matches ? targetToDisplay = this.parentNode.parentNode.parentNode.parentNode : targetToDisplay = this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+
+                let targetUsername;
+                if(mobileSize.matches){
+                        targetUsername = this.parentNode.parentNode.parentNode.childNodes[1].childNodes[0].childNodes[0].childNodes[1].textContent;
+                } else {
+                        targetUsername = this.parentNode.parentNode.parentNode.childNodes[0].childNodes[1].textContent;         
+                }
+                
+
+                
 
                 if(targetToDisplay.classList.contains("total-comment")){
                         const repliesContainer = document.createElement("div");
                         repliesContainer.classList.add("replies-container");
                         repliesContainer.classList.add("replies-container-display");
 
-                        repliesContainer.appendChild(displayInputToReply("Jean-premier-Com"));
+                        //mobileSize.matches ? console.log(repliesContainer) : repliesContainer.appendChild(displayInputToReply(targetUsername));
+                        repliesContainer.appendChild(displayInputToReply(targetUsername));
 
-
+                        
                         targetToDisplay.insertBefore(repliesContainer, targetToDisplay.childNodes[1]);
+                        
+                       
 
                 } else {
-                        targetToDisplay.insertBefore(displayInputToReply("Jean-rep-encore"), targetToDisplay.childNodes[1]);
+                        targetToDisplay.insertBefore(displayInputToReply(targetUsername), targetToDisplay.childNodes[1]);
                 }
-
+                console.log("en bas: targetToDisplay");
                 console.log(targetToDisplay);
         });
+        // FIN ADD EVENT LISTENER
 
         if(mine){
                 const buttonDelete = document.createElement("button");
@@ -247,7 +265,13 @@ function createInteractionCRUD(mine){
 
                 buttonDelete.addEventListener("click", function(){
 
-                        const targetToRemove = commentInteraction.parentNode.parentNode.parentNode.parentNode;
+                        let targetToRemove;
+                        if(mobileSize.matches){
+                                targetToRemove = commentInteraction.parentNode.parentNode;
+                        } else {
+                                targetToRemove = commentInteraction.parentNode.parentNode.parentNode.parentNode;
+                        }
+                        
 
                         targetToRemove.classList.contains("secondary-comment") ? targetToRemove.parentNode.removeChild(targetToRemove) : targetToRemove.parentNode.parentNode.removeChild(targetToRemove.parentNode);
                 });
@@ -291,7 +315,8 @@ function displayInputToReply(userToReply) {
         const textArea = document.createElement("textarea");
         textArea.setAttribute("placeholder", "Add a comment");
         textArea.setAttribute("name", "comment");
-        textArea.value = userToReply;
+        textArea.value = "@" + userToReply;
+        
 
         const button = document.createElement("button");
         button.classList.add("btn-post-comment");
@@ -303,6 +328,35 @@ function displayInputToReply(userToReply) {
         form.appendChild(button);
 
         postCommentContainer.appendChild(form);
+
+        button.addEventListener("click", function(e){
+                e.preventDefault();
+
+
+                const comment = this.parentNode.parentElement.parentNode;
+                const commentContent = this.parentNode.childNodes[1].value;
+
+                console.log(comment);
+                comment.style.Width = "96%";
+                
+                this.parentElement.parentElement.remove();
+                
+                        // if (1 === 1){
+                        //         comment.appendChild( displayAComment(false, currentUser, "seconds ago", commentContent, 0, currentAvatar, true));
+                        // } else {
+                        //         comment.appendChild( displayAComment(false, currentUser, "seconds ago", commentContent, 0, currentAvatar, true));
+                        // }
+
+                // si c'est le seul ptn de commentaire
+                // const repliesContainer = document.createElement("div");
+                // repliesContainer.classList.add("replies-container");
+                // comment.appendChild(repliesContainer);
+
+
+
+                //End of life of this element who deserve to post a repply
+                
+        });
 
         return postCommentContainer;
 }

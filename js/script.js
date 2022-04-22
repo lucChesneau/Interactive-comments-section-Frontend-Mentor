@@ -213,6 +213,7 @@ function createInteractionCRUD(mine){
                 
                 mobileSize.matches ? targetToDisplay = this.parentNode.parentNode.parentNode.parentNode : targetToDisplay = this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
 
+
                 let targetUsername;
                 if(mobileSize.matches){
                         targetUsername = this.parentNode.parentNode.parentNode.childNodes[1].childNodes[0].childNodes[0].childNodes[1].textContent;
@@ -223,22 +224,9 @@ function createInteractionCRUD(mine){
 
                 
 
-                if(targetToDisplay.classList.contains("total-comment")){
-                        const repliesContainer = document.createElement("div");
-                        repliesContainer.classList.add("replies-container");
-                        repliesContainer.classList.add("replies-container-display");
 
-                        //mobileSize.matches ? console.log(repliesContainer) : repliesContainer.appendChild(displayInputToReply(targetUsername));
-                        repliesContainer.appendChild(displayInputToReply(targetUsername));
-
-                        
-                        targetToDisplay.insertBefore(repliesContainer, targetToDisplay.childNodes[1]);
-                        
-                       
-
-                } else {
-                        targetToDisplay.insertBefore(displayInputToReply(targetUsername), targetToDisplay.childNodes[1]);
-                }
+                targetToDisplay.insertBefore(displayInputToReply(targetUsername), targetToDisplay.childNodes[1]);
+                
                 console.log("en bas: targetToDisplay");
                 console.log(targetToDisplay);
         });
@@ -332,14 +320,21 @@ function displayInputToReply(userToReply) {
         button.addEventListener("click", function(e){
                 e.preventDefault();
 
+                const mobileSize = window.matchMedia("(max-width: 700px)");
+
 
                 const comment = this.parentNode.parentElement.parentNode;
                 const commentContent = this.parentNode.childNodes[1].value;
 
+                console.log(comment.classList.contains("replies-container"));
                 console.log(comment);
                 comment.style.Width = "96%";
                 
+
                 this.parentElement.parentElement.remove();
+
+
+                
                 
                         // if (1 === 1){
                         //         comment.appendChild( displayAComment(false, currentUser, "seconds ago", commentContent, 0, currentAvatar, true));

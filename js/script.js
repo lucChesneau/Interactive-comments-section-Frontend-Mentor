@@ -320,19 +320,23 @@ function displayInputToReply(userToReply) {
         button.addEventListener("click", function(e){
                 e.preventDefault();
 
-                const mobileSize = window.matchMedia("(max-width: 700px)");
-
-
-                const comment = this.parentNode.parentElement.parentNode;
+                const comment = this.parentElement.parentElement.parentElement;
                 const commentContent = this.parentNode.childNodes[1].value;
-
-                console.log(comment.classList.contains("replies-container"));
-                console.log(comment);
                 comment.style.Width = "96%";
-                
+
+                if (this.parentElement.parentElement.parentElement.classList.contains("replies-container")) {
+                        comment.appendChild(displayAComment(false, currentUser, "seconds ago", commentContent, 0, currentAvatar, true));
+                } else if (this.parentElement.parentElement.parentElement.classList.contains("total-comment") && comment.childNodes.length ===  2) {
+                        const reppliesContainer = document.createElement("div");
+                        reppliesContainer.classList.add("replies-container");
+                        reppliesContainer.appendChild(displayAComment(false, currentUser, "seconds ago", commentContent, 0, currentAvatar, true));
+                        comment.appendChild(reppliesContainer);
+                }  else if (this.parentElement.parentElement.parentElement.classList.contains("total-comment") && comment.childNodes.length === 3) {
+                        comment.childNodes[2].appendChild(displayAComment(false, currentUser, "seconds ago", commentContent, 0, currentAvatar, true));
+                }      
 
                 this.parentElement.parentElement.remove();
-
+                // this.parentElement.parentElement.remove();
 
                 
                 
